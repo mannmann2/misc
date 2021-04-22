@@ -1,0 +1,43 @@
+Mandelbrot set in R.
+author: Mario dos Reis -- mariodosreis@yahoo.com
+October 2003
+
+This file contains a set of functions for playing with the Mandelbrot set in
+R.
+
+INSTALLATION INSTRUCTIONS:
+
+Decompress this file in any directory of your choice.
+
+The file 'mandelc.R' contains the necessary R code. The function 'mandelbrot',
+defined in this file calls a C routine in order to make the calculations
+faster. The C routine itself is in the file 'mandelbrot.c', this file must be
+compiled before it can be called from R. To do so, just type in a console the
+following command:
+
+R CMD SHLIB mandelbrot.c
+
+This will create a shared object, 'mandelbrot.so' which is needed by the R
+function.
+
+In order to check if you have done things properly, start R in the directory
+where you did the compilation and paste the contents of 'mandelc.R' in the
+console (or alternatively, type 'source("mandelc.R")' that should do).
+
+Now at the R console type:
+
+dyn.load("mandelbrot.so") 
+
+this will load the shared object so the C routine can be called. Now type:
+
+image(mandelbrot())
+
+and you should see a rather pretty image of the set!
+
+Eventually, perhaps in 50 years or so, I'll put everything together in a
+proper R package. Contributions are welcome!
+
+NOTE: these functions were written and tested in a Linux system, for Win users
+everything should apply the same just fine, except for the compilation of
+'mandelbrot.c', please check the R documentation on 'Building R extensions'
+regarding this issue.
